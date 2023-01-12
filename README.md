@@ -12,7 +12,11 @@ Requirements: recent-ish [`node`](https://nodejs.org/), `anvil` from [Foundry](h
 
 - Run `npm install`
 - Run `npm run e2e test` or see it live (it's _fast_)
-  `npm run e2e test --headed`
+  `npm run e2e test -- --headed`
 
 Note: you might need to install the Playwright browsers with
 `npx playwright install`
+
+## GitHub Workflow
+
+An example GitHub workflow has been implemented in [`.github/workflows/ci.yaml`](https://github.com/re-nft/dapp-e2e-example/blob/main/.github/workflows/ci.yaml)

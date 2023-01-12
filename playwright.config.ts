@@ -1,11 +1,14 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
+import { loadEnvConfig } from '@next/env';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
+// The Playwright config doesn't like @next/env's Env type.
+const env: Record<string, string> = Object.entries(
+  loadEnvConfig(process.cwd()).combinedEnv
+).reduce(
+  (env, [key, value]) => ({ ...env, ...(value && { [key]: value }) }),
+  {}
+);
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -51,19 +54,19 @@ const config: PlaywrightTestConfig = {
       },
     },
 
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-      },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //   },
+    // },
 
-    {
-      name: 'webkit',
-      use: {
-        ...devices['Desktop Safari'],
-      },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: {
+    //     ...devices['Desktop Safari'],
+    //   },
+    // },
 
     /* Test against mobile viewports. */
     // {
@@ -100,11 +103,17 @@ const config: PlaywrightTestConfig = {
   /* Run your local dev server before starting the tests */
   webServer: [
     {
-      command: 'anvil',
+      command: [
+        `anvil`,
+        `--fork-block-number=${env.FORK_BLOCK_NUMBER}`,
+        `--fork-url=${env.FORK_URL}`,
+      ].join(' '),
+      env,
       port: 8545,
     },
     {
       command: 'npm run dev',
+      env,
       port: 3000,
     },
   ],

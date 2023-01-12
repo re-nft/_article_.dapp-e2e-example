@@ -14,8 +14,7 @@ import { providers, Wallet } from 'ethers';
 
 const TESTNET_URL =
   process.env.NEXT_PUBLIC_TESTNET_URL || 'http://localhost:8545';
-const TESTNET_WALLET_KEY =
-  process.env.NEXT_PUBLIC_TESTNET_WALLET_KEY || undefined;
+const TESTNET_WALLET_KEY = process.env.NEXT_PUBLIC_TESTNET_WALLET_KEY;
 
 const signer = TESTNET_WALLET_KEY
   ? new Wallet(TESTNET_WALLET_KEY, new providers.JsonRpcProvider(TESTNET_URL))
