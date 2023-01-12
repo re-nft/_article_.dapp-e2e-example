@@ -16,4 +16,3 @@ Requirements: recent-ish [`node`](https://nodejs.org/), `anvil` from [Foundry](h
 
 Note: you might need to install the Playwright browsers with
 `npx playwright install`
-First, run the development server:
