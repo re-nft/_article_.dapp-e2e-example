@@ -8,7 +8,7 @@ We implemented:
 
 ## Getting Started
 
-Requirements: recent-ish `node`, `anvil` from Foundry-rs.
+Requirements: recent-ish [`node`](https://nodejs.org/), `anvil` from [Foundry](https://github.com/foundry-rs/foundry#installation).
 
 - Run `npm install`
 - Run `npm run e2e test` or see it live (it's _fast_)
