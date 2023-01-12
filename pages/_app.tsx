@@ -1,34 +1,58 @@
 import '../styles/globals.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
-import { RainbowKitProvider, getDefaultWallets } from '@rainbow-me/rainbowkit';
+import {
+  connectorsForWallets,
+  RainbowKitProvider,
+  type Wallet as RainbowkitWallet,
+} from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { mainnet, polygon, optimism, arbitrum, goerli } from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
+import { foundry } from '@wagmi/core/chains';
+import { MockConnector } from '@wagmi/core/connectors/mock';
+import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc';
+import { providers, Wallet } from 'ethers';
+
+const TESTNET_URL =
+  process.env.NEXT_PUBLIC_TESTNET_URL || 'http://localhost:8545';
+const TESTNET_WALLET_KEY =
+  process.env.NEXT_PUBLIC_TESTNET_WALLET_KEY || undefined;
+
+const signer = TESTNET_WALLET_KEY
+  ? new Wallet(TESTNET_WALLET_KEY, new providers.JsonRpcProvider(TESTNET_URL))
+  : Wallet.createRandom();
+
+const mockWallet = (): RainbowkitWallet => ({
+  createConnector: () => ({
+    connector: new MockConnector({
+      chains: [foundry],
+      options: {
+        flags: {
+          failConnect: false,
+          failSwitchChain: false,
+          isAuthorized: true,
+          noSwitchChain: false,
+        },
+        signer,
+      },
+    }),
+  }),
+  id: 'mock',
+  iconBackground: 'tomato',
+  iconUrl: async () => 'http://placekitten.com/100/100',
+  name: 'Mock Wallet',
+});
+
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Testing',
+    wallets: [mockWallet()],
+  },
+]);
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
-  ],
-  [
-    alchemyProvider({
-      // This is Alchemy's default API key.
-      // You can get your own at https://dashboard.alchemyapi.io
-      apiKey: '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC',
-    }),
-    publicProvider(),
-  ]
+  [foundry],
+  [jsonRpcProvider({ rpc: () => ({ http: TESTNET_URL }) })]
 );
-
-const { connectors } = getDefaultWallets({
-  appName: 'RainbowKit App',
-  chains,
-});
 
 const wagmiClient = createClient({
   autoConnect: true,
