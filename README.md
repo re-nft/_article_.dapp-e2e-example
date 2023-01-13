@@ -20,3 +20,13 @@ Note: you might need to install the Playwright browsers with
 ## GitHub Workflow
 
 An example GitHub workflow has been implemented in [`.github/workflows/ci.yaml`](https://github.com/re-nft/dapp-e2e-example/blob/main/.github/workflows/ci.yaml)
+
+## More info
+
+- reNFT: https://www.renft.io
+- reNFT Documentation: https://docs.renft.io
+- Discord: https://discord.com/invite/4Ab8tknmhf
+- Medium: https://medium.com/renftlabs
+- Opensea: https://opensea.io/collection/renftlabs
+- Telegram: https://t.me/renftlabs
+- Twitter: https://twitter.com/renftlabs
