@@ -1,5 +1,7 @@
 # Example: End to End testing dapps with Playwright, Rainbowkit 🌈, wagmi, ethers 🫡 and Foundry `anvil`
 
+Accompanying article: https://medium.com/renftlabs/end-to-end-testing-dapps-with-playwright-rainbowkit-wagmi-and-anvil-90d1d143512c.
+
 We implemented:
 
 - Rainbowkit 🌈 starter
